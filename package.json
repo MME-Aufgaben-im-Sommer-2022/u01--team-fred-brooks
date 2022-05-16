@@ -1,0 +1,16 @@
+{
+    "name": "mme-you-vs-shakespeare",
+    "version": "1.0.1",
+    "description": "Test your skill against the great barde!",
+    "main": "index.html",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "eslint": "eslint --format table resources/js"
+    },
+    "author": "Alexander Bazo <alexanderbazo@googlemail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "eslint": "^8.15.0"
+    }
+}
