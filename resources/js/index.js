@@ -17,7 +17,7 @@ function onWordlistAvailable(wordlist) {
 init();
 
 // Countdown-Function
-let defaultTime = 5;
+let defaultTime = 59;
 const wordInput = document.querySelector(".word-input");
 let firstHit = true;
 
