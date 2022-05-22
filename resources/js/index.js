@@ -6,11 +6,15 @@ function init() {
     WordList.loadList().then(onWordlistAvailable);
 }
 
+var numOfWords = 0;
+
 function onWordlistAvailable(wordlist) {
     console.log("### WordList received ###");
     // Prints the first 10 entries from the received word list
     console.log(wordlist.slice(0, 10));
     // TODO: Start your implementation here
+
+    numOfWords += wordlist.length;
 
     wordCompare(wordlist);
 
@@ -35,7 +39,7 @@ function startGame() {
 }
 
 function countDown() {
-    setInterval(function() {
+    const interval = setInterval(function() {
         if (defaultTime >= 0) {
             if (defaultTime < 10) {
                 document.getElementsByClassName('timer-output')[0].innerHTML = "00:0" + defaultTime;
@@ -44,10 +48,13 @@ function countDown() {
             }
             defaultTime--;
         } else {
-            clearInterval();
             document.getElementsByClassName('timer-output')[0].innerHTML = "";
             wordInput.value = "";
             document.getElementsByClassName('word-input')[0].disabled = true;
+            clearInterval(interval);
+            scoreCounter();
+            console.log("Game over");
+
 
         }
     },1000)
@@ -56,6 +63,8 @@ function countDown() {
 startGame();
 
 // WordComparison-Function
+var correctAnswers = 0;
+
 function wordCompare(jsonData) {
     let resultList = Array.from(document.body.querySelectorAll(".result-list"));
     wordInput.addEventListener("keypress", function (event) {
@@ -69,6 +78,7 @@ function wordCompare(jsonData) {
                         document.getElementsByClassName("result-list")[0].innerHTML += 
                             '<li><span class="count">' + jsonData[i].count + '</span>'
                                 + '<span class="word">' + jsonData[i].word + '</span></li>';
+                        correctAnswers++;
                         console.log("entered");
                     }
                 }
@@ -79,6 +89,16 @@ function wordCompare(jsonData) {
     });
 
 }
+
+// Score-Function
+function scoreCounter() {
+    let coveredPercent = (correctAnswers/numOfWords) * 100;
+    coveredPercent = coveredPercent.toFixed(2);
+    document.getElementsByClassName('score')[0].innerHTML += "Congratulations! You remembered " + correctAnswers 
+                                                            + " words from Romeo and Juliet. These are ~" + coveredPercent
+                                                                + " percent of all unique words Shakespeare used to write the play!";
+}
+
 
 
 
